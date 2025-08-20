@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Contacts;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers\AccountHelper;
+use App\Helpers\DateHelper;
 use App\Models\Contact\Contact;
 use App\Models\Contact\Reminder;
 use App\Http\Controllers\Controller;
@@ -123,5 +125,42 @@ class RemindersController extends Controller
 
         return redirect()->route('people.show', $contact)
             ->with('success', trans('people.reminders_delete_success'));
+    }
+
+    /**
+     * Mark the reminder.
+     *
+     * @param  Request  $request
+     * @param  Contact  $contact
+     * @param  Reminder  $reminder
+     * @return \Illuminate\Http\RedirectResponse
+     */
+
+    public function markread(Request $request, Contact $contact, Reminder $reminder)
+    {
+        $frequency_type = $request->input('frequency_type');
+        if ($frequency_type === 'recurrent') {
+            $frequency_type = $request->input('frequency_number_select');
+        }
+
+        
+        $carbonDate = Carbon::parse(DateHelper::addTimeAccordingToFrequencyType($reminder->initial_date, $reminder->frequency_type, $reminder->frequency_number));
+        $onlyDate = $carbonDate->format('Y-m-d'); // Result: "2025-10-25"
+
+        $data = [
+            'account_id' => auth()->user()->account_id,
+            'contact_id' => $contact->id,
+            'reminder_id' => $reminder->id,
+            'initial_date' => $onlyDate,
+            'frequency_type' => $reminder->frequency_type,
+            'frequency_number' => $reminder->frequency_number,
+            'title' => $reminder->title,
+            'description' => $reminder->description,
+        ];
+
+        app(UpdateReminder::class)->execute($data);
+
+        return redirect()->route('people.show', $contact)
+            ->with('success', trans('people.reminders_update_success'));
     }
 }

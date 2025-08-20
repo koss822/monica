@@ -56,6 +56,9 @@
         </div>
 
         <div class="table-cell list-actions">
+            <a href="{{ route('people.reminders.markread', [$contact, $reminder]) }}" class="di">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+            </a>
           {{-- Only display this if the reminder can be deleted - ie if it's not a reminder added automatically for birthdates --}}
           @if ($reminder->delible || ! $reminder->isBirthdayReminder())
             <a href="{{ route('people.reminders.edit', [$contact, $reminder]) }}" class="edit">

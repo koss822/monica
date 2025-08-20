@@ -150,6 +150,8 @@ Route::middleware(['auth', 'verified', 'mfa'])->group(function () {
         // Reminders
         Route::resource('people/{contact}/reminders', 'Contacts\\RemindersController')->except(['index', 'show']);
 
+        Route::get('people/{contact}/reminders/{reminder}/markread', 'Contacts\\RemindersController@markread')->name('reminders.markread');
+
         // Tasks
         Route::get('people/{contact}/tasks', 'Contacts\\TasksController@index')->name('tasks.get');
         Route::resource('tasks', 'TasksController')->only([
