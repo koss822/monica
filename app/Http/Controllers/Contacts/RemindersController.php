@@ -138,12 +138,6 @@ class RemindersController extends Controller
 
     public function markread(Request $request, Contact $contact, Reminder $reminder)
     {
-        $frequency_type = $request->input('frequency_type');
-        if ($frequency_type === 'recurrent') {
-            $frequency_type = $request->input('frequency_number_select');
-        }
-
-        
         $carbonDate = Carbon::parse(DateHelper::addTimeAccordingToFrequencyType($reminder->initial_date, $reminder->frequency_type, $reminder->frequency_number));
         $onlyDate = $carbonDate->format('Y-m-d'); // Result: "2025-10-25"
 
