@@ -84,6 +84,7 @@ RUN set -ex; \
         | sort -u \
         | xargs -rt apt-mark manual; \
         \
+    apt-mark manual libpng16-16 libicu-dev libmemcached11 libzip5 libfreetype6 libwebp7; \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
     rm -rf /var/lib/apt/lists/*
 
