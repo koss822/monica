@@ -33,7 +33,7 @@ jobs:
         id: docker_meta
         uses: crazy-max/ghaction-docker-meta@v4
         with:
-          images: ghcr.io/monicahq/monica
+          images: docker.io/krab55/monica
           tags: |
             type=sha
 
