@@ -6,7 +6,7 @@
 ### This file is based off of the `apache` variant in the above mentioned repo
 ###
 
-FROM php:8.1-apache
+FROM php:8.3-apache
 
 # opencontainers annotations https://github.com/opencontainers/image-spec/blob/master/annotations.md
 LABEL org.opencontainers.image.authors="Alexis Saettler <alexis@saettler.org>" \
@@ -43,6 +43,7 @@ RUN set -ex; \
         libmemcached-dev \
         libmagickwand-dev \
         libwebp-dev \
+        libicu-dev \
     ; \
     \
     debMultiarch="$(dpkg-architecture --query DEB_BUILD_MULTIARCH)"; \
