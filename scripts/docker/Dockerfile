@@ -87,6 +87,7 @@ RUN set -ex; \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
     rm -rf /var/lib/apt/lists/*
 
+RUN echo "search for php extensions" && php -m
 # Set crontab for schedules
 RUN set -ex; \
     \
